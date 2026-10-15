@@ -12,3 +12,5 @@ clipboard.experimental.js
 *.bak
 /noMerge
 logs/infinity-rules-mcp.log
+
+node_modules/
