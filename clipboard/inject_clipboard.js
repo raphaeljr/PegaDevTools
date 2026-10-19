@@ -3,22 +3,29 @@
 
 $.noConflict();
 
+//Pega '26: the page title is no longer .heading_2
+function getPageHeading() {
+	let heading = jQuery(".heading_2");
+	return heading.length ? heading : jQuery(".clipboard-page-header span.workarea_header_titles");
+}
+
 function handleRightPanelChange() {
     return new Promise(() => {
 		//handle pyWorkPage
-		if(jQuery(".heading_2").length>0 && jQuery(".heading_2")[0].textContent == 'pyWorkPage') {
-			let elem = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.textContent.trim() === "pyStatusWork"});
+		if(getPageHeading().length>0 && getPageHeading()[0].textContent.trim() == 'pyWorkPage') {
+			//innerText instead of textContent: in Pega '26 the property cell contains a <script> whose text is part of textContent
+			let elem = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.innerText.trim() === "pyStatusWork"});
 			if(elem.length > 0) {
 				let status = elem.next()[0].innerText;
 				if(status)
-					jQuery(".heading_2").append(" (<i>" + status + "</i>)");
+					getPageHeading().append(" (<i>" + status + "</i>)");
 			}
 			
 		}
 		//handle newAssignPage
-		else if(jQuery(".heading_2").length > 0 && jQuery(".heading_2")[0].textContent == 'newAssignPage') {
+		else if(getPageHeading().length > 0 && getPageHeading()[0].textContent.trim() == 'newAssignPage') {
 			let addedText = "", cls = "";
-			let napElem = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.textContent.trim() === "pxObjClass"});
+			let napElem = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.innerText.trim() === "pxObjClass"});
 			if(napElem.length > 0) {
 				
 				cls = napElem.next()[0].innerText;
@@ -28,21 +35,21 @@ function handleRightPanelChange() {
 					addedText += cls;					
 				}
 			}
-			napElem = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.textContent.trim() === "pxAssignedOperatorID"});
+			napElem = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.innerText.trim() === "pxAssignedOperatorID"});
 				if(napElem.length > 0) {
 					let op = napElem.next()[0].innerText;
 				if(op)
 					addedText += ": " + op;
 			}
 			if(cls)
-				jQuery(".heading_2").append(" (<i>" + addedText + "</i>)");
+				getPageHeading().append(" (<i>" + addedText + "</i>)");
 		}
 		else { //handle all the rest
-			let classElement = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.textContent.trim() === "pxObjClass"});
+			let classElement = jQuery('div#gridBody_right table.gridTable td.dataLabelRead.gridCell').filter(function(){return this.innerText.trim() === "pxObjClass"});
 			if(classElement.length > 0) {
 				let cls = classElement.next()[0].innerText;
 				if(cls) {
-					jQuery(".heading_2").append(" (<i>" + cls + "</i>)");
+					getPageHeading().append(" (<i>" + cls + "</i>)");
 				}
 			}
 		}

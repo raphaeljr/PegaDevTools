@@ -1,3 +1,9 @@
+//Pega '26: <header> has a fixed height and clips appended links; add them inline after the Requestor id instead
+function getHeaderLinkContainer() {
+	let requestorValue = jQuery("div[node_name='pzClipboardHeader'] div.layout-content-header_menu_primary > div.content-item.flex-grow-1 div.field-item");
+	return requestorValue.length ? requestorValue : jQuery("header");
+}
+
 //FEATURE: add link to pyWorkPage or RH_1 to header
 function addpyWorkPageLink() {
 	jQuery("#devToolsGoToWorkPage").remove();
@@ -5,13 +11,13 @@ function addpyWorkPageLink() {
 	//search for pyWorkPage
 	let pyWorkPage = jQuery("#gridNode li.gridRow ul li")?.has("span[title^='pyWorkPage']")[0];
 	if (pyWorkPage && pyWorkPage.innerText.indexOf("classless") < 0 && pyWorkPage.innerText.indexOf("ProjectManagement") < 0) {
-		jQuery("header").append("<b><a id='devToolsGoToWorkPage' class='Explorer_action'>pyWorkPage</a></b>");
+		getHeaderLinkContainer().append("<b><a id='devToolsGoToWorkPage' class='Explorer_action'>pyWorkPage</a></b>");
 		jQuery("a#devToolsGoToWorkPage").click(function () { jQuery("#gridNode li.gridRow ul li").has("span[title^='pyWorkPage']").first().trigger("click"); });
 		let title = jQuery("#gridNode li.gridRow ul li span[title^='pyWorkPage']")[0].title;
 		let clsName = extractClassName(title);
 		let clsNameFull = extractClassName(title, true);
 		if (clsName)
-			jQuery("header").append(' <i class="dark_background_label_dataLabelForRead" title="' + clsNameFull + '">(' + clsName + ')</i> ');
+			getHeaderLinkContainer().append(' <i class="dark_background_label_dataLabelForRead" title="' + clsNameFull + '">(' + clsName + ')</i> ');
 		pyWorkPage.style.fontWeight = "bold";
 		console.log('PDT pyWorkPage found');
 	}
@@ -19,13 +25,13 @@ function addpyWorkPageLink() {
 	//search for RH_1
 	pyWorkPage = jQuery("#gridNode li.gridRow ul li").has("span[title^='RH_1']")[0];
 	if (pyWorkPage) {
-		jQuery("header").append("<a id='devToolsGoToWorkPage' class='Explorer_action'>RH_1</a>");
+		getHeaderLinkContainer().append("<a id='devToolsGoToWorkPage' class='Explorer_action'>RH_1</a>");
 		jQuery("a#devToolsGoToWorkPage").click(function () { jQuery("#gridNode li.gridRow ul li").has("span[title^='RH_1']").first().trigger("click"); });
 		let title = jQuery("#gridNode li.gridRow ul li span[title^='RH_1']")[0].title;
 		let clsName = extractClassName(title);
 		let clsNameFull = extractClassName(title, true);
 		if (clsName)
-			jQuery("header").append(' <i class="dark_background_label_dataLabelForRead" title="' + clsNameFull + '">(' + clsName + ')</i> ');
+			getHeaderLinkContainer().append(' <i class="dark_background_label_dataLabelForRead" title="' + clsNameFull + '">(' + clsName + ')</i> ');
 		pyWorkPage.style.fontWeight = "bold";
 		console.log('PDT RH_1 found');
 	}
@@ -42,9 +48,9 @@ function addNewAssignPage() {
 	if (newAssignPage) {
 		let clsName = extractClassName(jQuery("#gridNode li.gridRow ul li span[title^='newAssignPage']")[0].title);
 		if (clsName && clsName !== "Assign-") {
-			jQuery("header").append(" <a id='devToolsGoToAssignPage' class='Explorer_action'>newAssignPage</a>");
+			getHeaderLinkContainer().append(" <a id='devToolsGoToAssignPage' class='Explorer_action'>newAssignPage</a>");
 			jQuery("#devToolsGoToAssignPage").click(function () { jQuery("#gridNode li.gridRow ul li").has("span[title^='newAssignPage']").first().trigger("click"); });
-			jQuery("header").append(' <i class="dark_background_label_dataLabelForRead" title="' + clsName + '">(' + clsName + ')</i>');
+			getHeaderLinkContainer().append(' <i class="dark_background_label_dataLabelForRead" title="' + clsName + '">(' + clsName + ')</i>');
 			newAssignPage.style.fontWeight = "bold";
 		}
 	}
@@ -66,8 +72,14 @@ function siteConfigCallback(siteConfig, globalConfig) {
 			}
 
 			let headerButtonsElement = document.querySelector('div[node_name="pzClipboardHeader"] div.float-right div.layout-content-header_menu_secondary');
+			let envLabelClass = "float-right";
+			if (!headerButtonsElement) {
+				//Pega '26: no div.float-right; put the label at the far right of the whole header bar instead
+				headerButtonsElement = document.querySelector('div[node_name="pzClipboardHeader"] div.layout-content-header_menu_primary');
+				envLabelClass += " PDTEnvLabel";
+			}
 			if (headerButtonsElement) {
-				headerButtonsElement.insertAdjacentHTML("beforeend", "<div class='float-right' style='color: white; text-shadow: black 0px 0px 6px;background-color:#" + siteConfig.color.replace("#", '') + ";border:2px solid;border-top-style:none; border-right-style:none;margin: 0 0 4px 0;font-weight: bold;border-color:#" + siteConfig.color.replace("#", '') + "; padding:6px'>" + siteConfig.label + "</ div>");
+				headerButtonsElement.insertAdjacentHTML("beforeend", "<div class='" + envLabelClass + "' style='color: white; text-shadow: black 0px 0px 6px;background-color:#" + siteConfig.color.replace("#", '') + ";border:2px solid;border-top-style:none; border-right-style:none;margin: 0 0 4px 0;font-weight: bold;border-color:#" + siteConfig.color.replace("#", '') + "; padding:6px'>" + siteConfig.label + "</ div>");
 			}
 
 			if (siteConfig.useColorTop) {
