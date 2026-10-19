@@ -30,12 +30,14 @@ function applyPDTCustomization() {
             siteConfig.color.replace("#", '') +
             "; padding:6px'>" + siteConfig.label + "</ div>"
         );
-        productionEnvElement.closest('div[bsimplelayout="true"]').style.paddingRight = "0";
-        document.querySelector("div.env-name").style.borderLeft = "none";
+        let envLayout = productionEnvElement.closest('div[bsimplelayout="true"]');
+        if (envLayout) envLayout.style.paddingRight = "0";
+        let envName = document.querySelector("div.env-name");
+        if (envName) envName.style.borderLeft = "none";
       } else {
         document
           .querySelector("div#PegaDevToolsSearchAllOptionsLink")
-          .insertAdjacentHTML(
+          ?.insertAdjacentHTML(
             "beforebegin",
             "<div style='color:#" +
               siteConfig.color.replace("#", '') +
@@ -50,11 +52,13 @@ function applyPDTCustomization() {
       }
 
       if (siteConfig.useColorTop) {
-        document.querySelector(
+        let studioPortal = document.querySelector(
           'div[data-portalharnessinsname="Data-Portal-DesignerStudio!pzStudio"]'
-        ).style.cssText =
-          "border-top:2px; border-top-style:solid; border-color:#" +
-          siteConfig.color.replace("#", '');
+        );
+        if (studioPortal)
+          studioPortal.style.cssText =
+            "border-top:2px; border-top-style:solid; border-color:#" +
+            siteConfig.color.replace("#", '');
       }
     }
     var settings;
@@ -211,7 +215,9 @@ function customizeText() {
 	/**** HEADER/TOP ****/
 
   //FEATURE: shorten Home tab name
-  document.querySelector("span#TABANCHOR span.textIn").innerText = "H";
+  try {
+    document.querySelector("span#TABANCHOR span.textIn").innerText = "H";
+  } catch (e) { console.log("PDT: shorten Home tab name skipped", e); }
 
   //document.querySelector("span#TABANCHOR span.textIn").eq(0).replaceWith('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 14 14" style="display: inline; vertical-align: middle; margin-right: 3px;" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><path class="st0" d="M13.9,7.8c-0.2,0.2-0.5,0.2-0.6,0l-1.9-2l0,7.8c0,0.2-0.2,0.4-0.4,0.4L3,14c-0.2,0-0.4-0.2-0.4-0.4l0-7.8  l-1.9,2c-0.2,0.2-0.5,0.2-0.6,0C0,7.5,0,7.3,0.1,7.1l6.6-7C6.8,0,6.9,0,7,0c0.1,0,0.2,0,0.3,0.1l6.5,7C14,7.3,14,7.6,13.9,7.8z   M7,1.1L3.4,4.9C3.5,5,3.5,5.1,3.5,5.2l0,7.9l7,0l0-7.9c0-0.1,0-0.2,0.1-0.3L7,1.1z"></path></svg>')
 
@@ -225,12 +231,18 @@ function customizeText() {
   /**** FOOTER ****/
 
   //FEATURE: shorten Accessibility
-  document.querySelector("div.accessibility-toggle a").innerHTML = document.querySelector("div.accessibility-toggle a").innerHTML.replace(document.querySelector("div.accessibility-toggle a").textContent, '');
+  try {
+    document.querySelector("div.accessibility-toggle a").innerHTML = document.querySelector("div.accessibility-toggle a").innerHTML.replace(document.querySelector("div.accessibility-toggle a").textContent, '');
+  } catch (e) { console.log("PDT: shorten Accessibility skipped", e); }
   //FEATURE: shorten Performance
-  document.querySelector("div.pal-link a").innerHTML = document.querySelector("div.pal-link a").innerHTML.replace(document.querySelector("div.pal-link a").textContent, '');
-  document.querySelector("div.pal-link a").innerHTML = document.querySelector("div.pal-link a").innerHTML.replace(document.querySelector("div.pal-link a").textContent, '');
+  try {
+    document.querySelector("div.pal-link a").innerHTML = document.querySelector("div.pal-link a").innerHTML.replace(document.querySelector("div.pal-link a").textContent, '');
+    document.querySelector("div.pal-link a").innerHTML = document.querySelector("div.pal-link a").innerHTML.replace(document.querySelector("div.pal-link a").textContent, '');
+  } catch (e) { console.log("PDT: shorten Performance skipped", e); }
   //FEATURE: shorten Issues
-  document.querySelector("div.alerts a").innerHTML = document.querySelector("div.alerts a").innerHTML.replace(document.querySelector("div.alerts a").textContent, '');
+  try {
+    document.querySelector("div.alerts a").innerHTML = document.querySelector("div.alerts a").innerHTML.replace(document.querySelector("div.alerts a").textContent, '');
+  } catch (e) { console.log("PDT: shorten Issues skipped", e); }
 
   //FEATURE: shorten Live Data
   let DataInspectorButton = document.querySelector(
