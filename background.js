@@ -8,6 +8,19 @@ function injectScript(injectedScript, tabId, frameId) {
 	});
 }
 
+//content scripts (isolated world, next to shared.js) for a rule type detected at runtime, see devstudio/ruleRefresh.js
+function injectContentScripts(files, tabId, frameId) {
+	if (!Array.isArray(files) || !files.every((file) => /^devstudio\/devstudio_[a-z]+\.js$/.test(file))) {
+		console.warn("PDT: injectContentScripts refused", files);
+		return false;
+	}
+	browser.scripting.executeScript({
+		files: files,
+		target: { tabId: tabId, frameIds: [frameId] },
+	});
+	return true;
+}
+
 function appendScript(appendedScript, tabId, frameId) {
 	browser.scripting.executeScript({
 		func: appendedScript,
@@ -28,6 +41,10 @@ browser.runtime.onMessage.addListener(async  (request, sender, sendResponse) => 
 	} else if (request.purpose == "injectScript") {
 		injectScript(request.injectedScript, sender.tab.id, sender.frameId);
 		sendResponse("injecting " + request.injectedScript + " to tab " + sender.tab.id + " frame " + sender.frameId);
+	} else if (request.purpose == "injectContentScripts") {
+		sendResponse(injectContentScripts(request.files, sender.tab.id, sender.frameId)
+			? "injecting " + request.files + " to tab " + sender.tab.id + " frame " + sender.frameId
+			: "refused");
 	} else if (request.purpose == "tracerState" && arrDevTabs.get(sender.origin)) {
 	//TODO: try Long-lived connections https://developer.chrome.com/docs/extensions/mv3/messaging/#connect 
 

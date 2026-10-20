@@ -137,6 +137,15 @@
 		},
 		{
 			"matches": [
+				"*://*/prweb/*pyActivity=ReloadHarness*PreActivity=pzRuleFormToolbarRefresh*"
+			],
+			"all_frames": true,
+			"js": [
+				"devstudio/ruleRefresh.js"
+			]
+		},
+		{
+			"matches": [
 				"*://*/prweb/*pyLibraryName*pyFunctionName*",
 				"*://*/prweb/*action=openRuleSpecific*openHandle=RULE-UTILITY-FUNCTION*",
 				"*://*/prweb/*SaveAs*prevRecordkey=RULE-UTILITY-FUNCTION*",
