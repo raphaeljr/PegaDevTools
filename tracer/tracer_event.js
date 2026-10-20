@@ -1,8 +1,8 @@
 //TODO: remove jQuery
 console.log("PDT tracer_event.js");
-PDT.isTracerEnabled().then(isTracerEnabled => {
+siteConfig((_siteConfig, globalConfig) => {
 
-	if (!isTracerEnabled) {
+	if (globalConfig.settings?.tracer?.disabled) {
 		console.log("PDT tracer disabled");
 	} else {		
 		applyPDTCustomization();
@@ -62,6 +62,7 @@ $('td.eventTitleBarStyle[title="Line"]').prev().append(removeAllColumnsBtn);
 
 	function toggleHeaderFloat(elem, skipSave = false) {
 let tracerHeader = document.querySelector("table#traceEvent-TABLE");
+		if (!tracerHeader) return;
 		if (tracerHeader.style.position === "sticky") {
 			tracerHeader.style.position = "static";			
 			elem.style.textDecoration = "line-through";
@@ -86,7 +87,7 @@ let tracerHeader = document.querySelector("table#traceEvent-TABLE");
 		toggleHeaderFloat(event.target);
 	});
 
-	document.querySelector('table#traceEvent-TABLE tr td:last-child').appendChild(pinButton);
+	document.querySelector('table#traceEvent-TABLE tr td:last-child')?.appendChild(pinButton);
 
     browser.storage.local.get('tracerPinHeader', (data) => {
         if (data.tracerPinHeader) {

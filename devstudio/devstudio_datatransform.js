@@ -5,12 +5,12 @@ document.arrive("div[data-node-id='pzRuleFormRuleset'] div.primary-navigation-li
     injectScript("/js/", "copyDataTransform.js");
 });
 
-PDT.settings().then(settings => {
-    if (settings?.devstudio?.datatransform?.moveSuperclassToTop) {
-        let superclassElem = document.querySelector('div.content-layout input[type="checkbox"][name*="CallSuperClassMode"]').closest("div.content-layout")
-        let target = document.querySelector("table#bodyTbl_right").closest("div.content-item.content-layout.item-1");
+siteConfig((_siteConfig, globalConfig) => {
+    if (globalConfig.settings?.devstudio?.datatransform?.moveSuperclassToTop) {
+        let superclassElem = document.querySelector('div.content-layout input[type="checkbox"][name*="CallSuperClassMode"]')?.closest("div.content-layout");
+        let target = document.querySelector("table#bodyTbl_right")?.closest("div.content-item.content-layout.item-1");
 
-        if(target) {
+        if(superclassElem && target) {
             target.parentNode.insertBefore(superclassElem, target);
         }
 
