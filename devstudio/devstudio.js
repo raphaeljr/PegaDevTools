@@ -18,38 +18,29 @@ function applyPDTCustomization() {
       }
     
       //FEATURE: environment header
-      let productionEnvElement = document.querySelector(
-        "div[data-ui-meta*='D_pzGetCurrentSystemRecord.pyActiveProductionLevelName']"
-      );
-      if (productionEnvElement) {
-        productionEnvElement.insertAdjacentHTML(
-          "afterend",
-          "<div style='color: white; text-shadow: black 0px 0px 6px;background-color:#" +
-            siteConfig.color.replace("#", '') +
-            ";border:2px solid; border-top-style:none; border-right-style:none; font-weight:bold; border-color:#" +
-            siteConfig.color.replace("#", '') +
-            "; padding:6px'>" + siteConfig.label + "</ div>"
-        );
-        let envLayout = productionEnvElement.closest('div[bsimplelayout="true"]');
-        if (envLayout) envLayout.style.paddingRight = "0";
-        let envName = document.querySelector("div.env-name");
-        if (envName) envName.style.borderLeft = "none";
-      } else {
-        document
-          .querySelector("div#PegaDevToolsSearchAllOptionsLink")
-          ?.insertAdjacentHTML(
-            "beforebegin",
-            "<div style='color:#" +
+      //Pega '26 renders the header after this script runs, so wait for the element (fires immediately if it already exists)
+      document.arrive(
+        "div[data-ui-meta*='D_pzGetCurrentSystemRecord.pyActiveProductionLevelName']",
+        { existing: true },
+        function (productionEnvElement) {
+          productionEnvElement.insertAdjacentHTML(
+            "afterend",
+            "<div style='color: white; text-shadow: black 0px 0px 6px;background-color:#" +
               siteConfig.color.replace("#", '') +
-              ";border:2px solid; margin:inherit; margin-right:7px; padding:3px'>" +
+              ";border:2px solid; border-top-style:none; border-right-style:none; font-weight:bold; border-color:#" +
               siteConfig.color.replace("#", '') +
-              "</ div>"
+              "; padding:6px'>" + siteConfig.label + "</ div>"
           );
-      }
+          let envLayout = productionEnvElement.closest('div[bsimplelayout="true"]');
+          if (envLayout) envLayout.style.paddingRight = "0";
+          let envName = document.querySelector("div.env-name");
+          if (envName) envName.style.borderLeft = "none";
 
-      if (globalConfig.settings?.hideEnvironmentHeader) {
-        if (productionEnvElement) productionEnvElement.style.display = "none";
-      }
+          if (globalConfig.settings?.hideEnvironmentHeader) {
+            productionEnvElement.style.display = "none";
+          }
+        }
+      );
 
       if (siteConfig.useColorTop) {
         let studioPortal = document.querySelector(
@@ -95,7 +86,8 @@ function applyPDTCustomization() {
         showCheckoutIndicator();
       }
 
-      addHeaderShortcuts();
+      //Pega '26 renders the header after this script runs, so wait for it (fires immediately if it already exists)
+      document.arrive("div.create-case", { existing: true }, addHeaderShortcuts);
       customizeText();
       injectSidebarToggle();
 
