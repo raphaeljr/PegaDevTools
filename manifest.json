@@ -79,7 +79,8 @@
 				"*://*/prweb/*action=createNewWork*portalName=Developer*",
 				"*://*/prweb/*/*eventSrcSection=Embed-PropertyValidation*",
 				"*://*/prweb/*/*action=openRuleByClassAndName*",
-				"*://*/prweb/*/*action=openRuleByKeys*"
+				"*://*/prweb/*/*action=openRuleByKeys*",
+				"*://*/prweb/*pyActivity=ReloadHarness*PreActivity=pzRuleFormToolbarRefresh*"
 			],
 			"all_frames": true,
 			"js": [
@@ -126,7 +127,8 @@
 				"*://*/prweb/*createNewWork*RULE-OBJ-FLOW*",
 				"*://*/prweb/*action=openRule*bjClass=Rule-Obj-Flow*",
 				"*://*/prweb/*openRuleByKeys*openHandle=RULE-OBJ-FLOW*",
-				"*://*/prweb/*openRuleByKeys*openHandle=Rule-Obj-Flow*"	
+				"*://*/prweb/*openRuleByKeys*openHandle=Rule-Obj-Flow*",
+				"*://*/prweb/*pyActivity=ReloadHarness*PreActivity=pzRuleFormToolbarRefresh*"
 			],
 			"all_frames": true,
 			"js": [
