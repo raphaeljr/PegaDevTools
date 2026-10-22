@@ -11,6 +11,6 @@ resources/codemirror/jsxjava.html
 clipboard.experimental.js
 *.bak
 /noMerge
-logs/infinity-rules-mcp.log
+logs/
 
 node_modules/
