@@ -54,6 +54,9 @@ function saveSettings() {
   settings.devstudio.expandTabOnHover = document.querySelector("input#devstudioExpandTabOnHover").checked && settings.debug;
   settings.devstudio.hideCloseButton = document.querySelector("input#devstudioHideCloseButton").checked;
   settings.devstudio.longerRuleNames = document.querySelector("input#devstudioLongerRuleNames").checked;
+  settings.devstudio.showShortcutSearch = document.querySelector("input#devstudioShortcutSearch").checked;
+  settings.devstudio.showShortcutOp = document.querySelector("input#devstudioShortcutOp").checked;
+  settings.devstudio.showShortcutLogs = document.querySelector("input#devstudioShortcutLogs").checked;
   settings.devstudio.checkoutIndicator = document.querySelector("input#devstudioCheckoutIndicator").checked && settings.debug;
 
   settings.agilestudio = new Object();
@@ -110,6 +113,10 @@ function restoreOptions() {
     document.querySelector("input#devstudioExpandTabOnHover").checked = (data.settings.devstudio.expandTabOnHover && data.settings.debug)?data.settings.devstudio.expandTabOnHover:"";    
     document.querySelector("input#devstudioHideCloseButton").checked = (data.settings.devstudio.hideCloseButton)?data.settings.devstudio.hideCloseButton:"";
     document.querySelector("input#devstudioLongerRuleNames").checked = (data.settings.devstudio.longerRuleNames)?data.settings.devstudio.longerRuleNames:"";
+    //header shortcuts are shown unless explicitly turned off (settings saved before this option existed have no value)
+    document.querySelector("input#devstudioShortcutSearch").checked = (data.settings.devstudio.showShortcutSearch !== false);
+    document.querySelector("input#devstudioShortcutOp").checked = (data.settings.devstudio.showShortcutOp !== false);
+    document.querySelector("input#devstudioShortcutLogs").checked = (data.settings.devstudio.showShortcutLogs !== false);
     document.querySelector("input#devstudioCheckoutIndicator").checked = (data.settings.devstudio.devstudioCheckoutIndicator && data.settings.debug)?data.settings.devstudio.devstudioCheckoutIndicator:"";
 
     if(typeof data.settings.agilestudio === "undefined") data.settings.agilestudio = {};

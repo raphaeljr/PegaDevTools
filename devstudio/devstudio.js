@@ -182,18 +182,21 @@ function addHeaderShortcuts() {
   let createCaseDiv = document.querySelector("div.create-case");
   if(createCaseDiv) {
 	//FEATURE: shortcuts to Search all options
+    if (PDT.settings.devstudio?.showShortcutSearch !== false)
     createCaseDiv.insertAdjacentHTML(
       "beforeend",
 	  '<div id="PegaDevToolsSearchAllOptionsLink"><a href="#" onclick="pd(event);" class="Header_nav margin-1x" role="menuitem" data-ctl="" data-click="[[&quot;runScript&quot;,[&quot;pega.ui.commandpalette.toggle()&quot;]]]"><span class="menu-item-title-wrap" data-click="."><span class="menu-item-title" data-click="..">Search</span></span></a></div>'
 	);
   
 	//FEATURE: shortcuts to Operators in header
+    if (PDT.settings.devstudio?.showShortcutOp !== false)
     createCaseDiv .insertAdjacentHTML(
       "beforeend",
 	  '<div id="PegaDevToolsOperatorLink"><a href="#" onclick="pd(event);" class="Header_nav margin-1x" data-ctl="Link" name="pyStudioHome_pyDisplayHarness_10" data-click="[[&quot;openLandingPage&quot;,[&quot;Organization and Security: Organization&quot;,&quot;Display&quot;,{&quot;harnessName&quot;:&quot;pzLPOrganizationAndSecurityOrganization&quot;,&quot;className&quot;:&quot;Pega-Landing-Org&quot;,&quot;model&quot;:&quot;&quot;,&quot;page&quot;:&quot;&quot;,&quot;readOnly&quot;:&quot;false&quot;,&quot;contentID&quot;:&quot;b7d85aff-de9d-4a4d-9e1e-3b742e74078c&quot;,&quot;dynamicContainerID&quot;:&quot;&quot;,&quot;customParam&quot;:{}},{&quot;levelA&quot;:&quot;&quot;,&quot;levelB&quot;:&quot;&quot;,&quot;levelC&quot;:&quot;Operators&quot;}]]]" class=""><span class="menu-item-title-wrap" data-click=".">Op<span></a></div>'
 	);
   
 	//FEATURE: shortcuts to Logs in header
+    if (PDT.settings.devstudio?.showShortcutLogs !== false)
     createCaseDiv .insertAdjacentHTML(
       "beforeend",
 	  '<div id="PegaDevToolsLogLink"><a href="#" onclick="pd(event);" class="Header_nav margin-1x" role="menuitem" data-ctl="" data-click="[[&quot;openLandingPage&quot;,[&quot;System: Operations&quot;,&quot;Display&quot;,{&quot;harnessName&quot;:&quot;pzLPSystemOperationsClusterManagement&quot;,&quot;className&quot;:&quot;Pega-Landing-System-Operations&quot;,&quot;model&quot;:&quot;pzInitializeSystemOperationsLandingPage&quot;,&quot;page&quot;:&quot;&quot;,&quot;readOnly&quot;:&quot;false&quot;,&quot;contentID&quot;:&quot;a61bd6ee-9e44-4219-814e-2ba0edb7f7c1&quot;,&quot;dynamicContainerID&quot;:&quot;&quot;},{&quot;levelA&quot;:&quot;&quot;,&quot;levelB&quot;:&quot;&quot;,&quot;levelC&quot;:&quot;Logs&quot;}]]]"><span class="menu-item-title-wrap" data-click=".">Logs<span></a></div>'
