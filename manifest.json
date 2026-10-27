@@ -1,8 +1,8 @@
 {
 	"name": "PegaDevTools",
 	"description": "Pega Developer Productivity Tools",
-	"version": "0.1.0",
-	"version_name": "0.1.0-alpha",
+	"version": "0.1.1",
+	"version_name": "0.1.1-alpha",
 	"manifest_version": 3,
 	"author": "Marcin Leśniak",
 	"permissions": [
